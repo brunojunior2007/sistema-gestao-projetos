@@ -11,12 +11,12 @@ public class Application {
         public static void main(String[] args) {
 
                 System.out.println("=========================================================================");
-                System.out.println("🚀 ERP E WORKFLOW - SISTEMA DE GESTÃO DE CRONOGRAMAS E EQUIPES");
+                System.out.println("ERP E WORKFLOW - SISTEMA DE GESTÃO DE CRONOGRAMAS E EQUIPES");
                 System.out.println("=========================================================================");
 
                 GerenciadorFluxoController fluxoExecutivo = new GerenciadorFluxoController();
 
-                // ── 1. MATRÍCULA FUNCIONAL E SISTEMA DE RH ────────────────────────────
+                // == 1. MATRÍCULA FUNCIONAL E SISTEMA DE RH ============================
                 System.out.println("\n======= 1. INJEÇÃO DE RH E FORMULAÇÃO DE PAPÉIS =======");
 
                 Colaborador gestorOperacoes = fluxoExecutivo.registrarColaborador(
@@ -34,7 +34,7 @@ public class Application {
                                 "Especialista em UX e Pesquisa", "pedro.santos", "9785946",
                                 Colaborador.PerfilColaborador.COLABORADOR);
 
-                // ── 2. FLUXOS DE NEGÓCIOS DE GERENCIAMENTO (PROJETOS) ─────────────────
+                // == 2. FLUXOS DE NEGÓCIOS DE GERENCIAMENTO (PROJETOS) =================
                 System.out.println("\n======= 2. ABERTURA DE ATAS DOS PROJETOS ESTRATÉGICOS =======");
 
                 GestaoProjeto painelEventual = fluxoExecutivo.registrarProjeto(
@@ -56,11 +56,11 @@ public class Application {
                 fluxoExecutivo.registrarProjeto("Iniciativa Excluída", "Sem patrono designado.",
                                 LocalDate.now(), LocalDate.now().plusMonths(1), null);
 
-                // ── 3. AVANÇO PROGRESSIVO NOS STATUS OPERACIONAIS ─────────────────────
+                // == 3. AVANÇO PROGRESSIVO NOS STATUS OPERACIONAIS =====================
                 System.out.println("\n======= 3. RECLASSIFICAÇÃO DE ROADMAP DO PROJETO =======");
                 fluxoExecutivo.atualizarStatusProjeto(painelEventual, GestaoProjeto.StatusProjeto.EM_ANDAMENTO);
 
-                // ── 4. CONSOLIDAÇÃO DOS POLOS TECNOLÓGICOS (TIMES) ────────────────────
+                // == 4. CONSOLIDAÇÃO DOS POLOS TECNOLÓGICOS (TIMES) ====================
                 System.out.println("\n======= 4. COMPOSIÇÃO DE POLOS E HUB DE EQUIPES =======");
 
                 Time divisaoCore = fluxoExecutivo.registrarTime(
@@ -81,6 +81,6 @@ public class Application {
                 fluxoExecutivo.exibirTime(divisaoCore);
 
                 System.out.println(
-                                "\n✅ O ciclo completo de gestão foi plenamente executado em conformidade com as diretrizes da disciplina 'Soluções Computacionais'.");
+                                "\nO ciclo completo de gestão foi plenamente executado em conformidade com as diretrizes da disciplina 'Soluções Computacionais'.");
         }
 }

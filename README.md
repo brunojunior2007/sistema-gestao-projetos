@@ -1,4 +1,4 @@
-# 💻 Sistema de gestão de projetos e equipes
+# 📊 Sistema de gestão de projetos e equipes
 
 Este projeto foi construído para centralizar a operação de eventos, eliminando gargalos de comunicação e garantindo rastreabilidade. A arquitetura foi projetada para proteger dados sensíveis e forçar o cumprimento de regras de negócios essenciais para o sucesso da operação.
 
@@ -9,7 +9,14 @@ Este projeto foi construído para centralizar a operação de eventos, eliminand
 - **Trava de responsabilidade**: Impossibilidade sistêmica de criar um projeto sem alocação de um responsável (Regra de negócio aplicada via Construtor).
 - **Alocação de equipes**: Distribuição de colaboradores por projeto e time de forma organizada.
 
-## Estrutura do projeto (Padrão MVC)
+## 💻 Tecnologias e padrões utilizados
+
+- **Linguagem**: Java (JDK 17+)
+- **Arquitetura**: MVC (Model - View - Controller) + Repository
+- **Paradigma**: Programação Orientada a Objetos (POO) - Encapsulamento, Construtores e Instanciação.
+- **Versionamento**: Git e GitHub
+
+## 📂 Estrutura do projeto (Padrão MVC)
 
 O código-fonte é rigorosamente organizado no pacote base `br.com.brunojr.sistemagestao` para separar a interface, as regras de negócio e o controle de dados:
 
