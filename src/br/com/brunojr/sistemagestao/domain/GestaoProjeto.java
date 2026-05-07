@@ -13,12 +13,21 @@ public class GestaoProjeto {
     private LocalDate dataTerminoPrevista;
     private StatusProjeto status;
     private Colaborador gerente;
+    private double orcamento;
+    private Prioridade prioridade;
 
     /**
      * Representação dos estágios do ciclo de vida do projeto.
      */
     public enum StatusProjeto {
         PLANEJADO, EM_ANDAMENTO, CONCLUIDO, CANCELADO
+    }
+
+    /**
+     * Níveis de prioridade estratégica para o projeto.
+     */
+    public enum Prioridade {
+        ALTA, MEDIA, BAIXA
     }
 
     /**
@@ -29,12 +38,16 @@ public class GestaoProjeto {
      * @param dataInicio          Data inicial do cronograma operacional.
      * @param dataTerminoPrevista Previsão final do cronograma.
      * @param gerente             Colaborador investido do papel de coordenação/gerência.
+     * @param orcamento           Valor financeiro alocado ao projeto.
+     * @param prioridade          Nível de importância estratégica.
      */
     public GestaoProjeto(String nome, String descricao, LocalDate dataInicio,
-                         LocalDate dataTerminoPrevista, Colaborador gerente) {
+                         LocalDate dataTerminoPrevista, Colaborador gerente,
+                         double orcamento, Prioridade prioridade) {
         if (nome == null || nome.isBlank()) {
             throw new IllegalArgumentException("A nomenclatura do projeto não deve ser nula ou em branco.");
         }
+        // [TRAVA DE RESPONSABILIDADE] - Garantia sistêmica via Construtor
         if (gerente == null) {
             throw new IllegalArgumentException("É imperativo designar um Gerente Responsável para o fluxo do projeto.");
         }
@@ -45,6 +58,9 @@ public class GestaoProjeto {
         if (dataInicio != null && dataTerminoPrevista != null && dataTerminoPrevista.isBefore(dataInicio)) {
             throw new IllegalArgumentException("Inconsistência cronológica: O término previsto antecede a data de início.");
         }
+        if (orcamento < 0) {
+            throw new IllegalArgumentException("O aporte financeiro (orçamento) não pode ser negativo.");
+        }
 
         this.nome = nome;
         this.descricao = descricao;
@@ -52,6 +68,8 @@ public class GestaoProjeto {
         this.dataTerminoPrevista = dataTerminoPrevista;
         this.status = StatusProjeto.PLANEJADO;
         this.gerente = gerente;
+        this.orcamento = orcamento;
+        this.prioridade = prioridade != null ? prioridade : Prioridade.MEDIA;
     }
 
     /**
@@ -69,9 +87,11 @@ public class GestaoProjeto {
     public LocalDate getDataTerminoPrevista() { return dataTerminoPrevista; }
     public StatusProjeto getStatus() { return status; }
     public Colaborador getGerente() { return gerente; }
+    public double getOrcamento() { return orcamento; }
+    public Prioridade getPrioridade() { return prioridade; }
 
     @Override
     public String toString() {
-        return "Painel Estratégico [" + status + "] " + nome + " | Liderança: " + gerente.getNome();
+        return "Painel Estratégico [" + status + "] " + nome + " | Liderança: " + gerente.getNome() + " | Prioridade: " + prioridade;
     }
 }

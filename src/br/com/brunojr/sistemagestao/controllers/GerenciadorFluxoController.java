@@ -57,9 +57,9 @@ public class GerenciadorFluxoController {
      */
     public GestaoProjeto registrarProjeto(String nome, String descricao,
             LocalDate inicio, LocalDate terminoPrevisto,
-            Colaborador gerente) {
+            Colaborador gerente, double orcamento, GestaoProjeto.Prioridade prioridade) {
         try {
-            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto, gerente);
+            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto, gerente, orcamento, prioridade);
             projetoRepo.salvarProjeto(projetoAtual);
             interfaceUsuario.exibirMensagem("Escopo de projeto chancelado com presteza.");
             interfaceUsuario.exibirPainelProjeto(projetoAtual);
