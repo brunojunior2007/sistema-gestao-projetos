@@ -5,13 +5,13 @@ import br.com.brunojr.sistemagestao.domain.GestaoProjeto;
 import br.com.brunojr.sistemagestao.domain.Time;
 
 /**
- * Interface Externa de Console e Renderização Base. Modela a comunicação visual com os painéis
+ * Interface Externa de Console e Renderização Base. Modela a comunicação visual
+ * com os painéis
  * executivos do portfólio digital.
  */
 public class InterfaceConsole {
 
-    private static final String LINHA_EXECUTIVA =
-            "==========================================================";
+    private static final String LINHA_EXECUTIVA = "==========================================================";
 
     public void exibirMensagem(String msg) {
         System.out.println("> [LOG EXECUTIVO] " + msg);
@@ -49,6 +49,13 @@ public class InterfaceConsole {
         System.out.println("| PROJEÇÃO    : " + projetoAtual.getStatus());
         System.out.println("| BOARD LEADER: " + projetoAtual.getGerente().getNome() + " (Classe: "
                 + projetoAtual.getGerente().getPerfil() + ")");
+        System.out.println("| TAREFAS E ENTREGÁVEIS:");
+        if (projetoAtual.getTarefas().isEmpty()) {
+            System.out.println("|   - Nenhuma tarefa cadastrada.");
+        } else {
+            projetoAtual.getTarefas().forEach(t -> System.out
+                    .println("|   - " + t.getTitulo() + " [" + t.getStatus() + "] Prazo: " + t.getPrazo()));
+        }
         System.out.println("+" + LINHA_EXECUTIVA + "+");
     }
 

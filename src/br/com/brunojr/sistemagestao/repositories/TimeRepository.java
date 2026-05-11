@@ -4,9 +4,11 @@ import br.com.brunojr.sistemagestao.domain.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * Estrutura de persistência e repositório operacional de dados para a entidade Time.
+ * Estrutura de persistência e repositório operacional de dados para a entidade
+ * Time.
  */
 public class TimeRepository {
     private List<Time> armazenamentoEmMemoria = new ArrayList<>();
@@ -16,6 +18,15 @@ public class TimeRepository {
      */
     public void salvarTime(Time timeAtual) {
         armazenamentoEmMemoria.add(timeAtual);
+    }
+
+    /**
+     * Recuperação de Time via nome único.
+     */
+    public Optional<Time> buscarPorNome(String nome) {
+        return armazenamentoEmMemoria.stream()
+                .filter(timeAtual -> timeAtual.getNome().equalsIgnoreCase(nome))
+                .findFirst();
     }
 
     /**

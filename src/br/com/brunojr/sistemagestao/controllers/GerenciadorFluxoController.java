@@ -1,5 +1,7 @@
 package br.com.brunojr.sistemagestao.controllers;
 
+import br.com.brunojr.sistemagestao.domain.Tarefa;
+
 import br.com.brunojr.sistemagestao.domain.Time;
 import br.com.brunojr.sistemagestao.domain.GestaoProjeto;
 import br.com.brunojr.sistemagestao.domain.Colaborador;
@@ -59,7 +61,8 @@ public class GerenciadorFluxoController {
             LocalDate inicio, LocalDate terminoPrevisto,
             Colaborador gerente, double orcamento, GestaoProjeto.Prioridade prioridade) {
         try {
-            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto, gerente, orcamento, prioridade);
+            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto, gerente, orcamento,
+                    prioridade);
             projetoRepo.salvarProjeto(projetoAtual);
             interfaceUsuario.exibirMensagem("Escopo de projeto chancelado com presteza.");
             interfaceUsuario.exibirPainelProjeto(projetoAtual);
@@ -81,6 +84,19 @@ public class GerenciadorFluxoController {
         projetoAtual.atualizarStatus(novoStatus);
         interfaceUsuario.exibirMensagem("Dashboard revisado. Diretriz macro do projeto '" + projetoAtual.getNome()
                 + "' impulsionada para a fase de " + novoStatus);
+    }
+
+    public Tarefa registrarTarefa(GestaoProjeto projeto, String titulo, String desc, LocalDate prazo,
+            Colaborador responsavel) {
+        try {
+            Tarefa tarefa = new Tarefa(titulo, desc, prazo, responsavel);
+            projeto.adicionarTarefa(tarefa);
+            interfaceUsuario.exibirMensagem("Tarefa '" + titulo + "' acoplada ao projeto '" + projeto.getNome() + "'.");
+            return tarefa;
+        } catch (IllegalArgumentException e) {
+            interfaceUsuario.exibirAlerta("Falha na geração de tarefa: " + e.getMessage());
+            return null;
+        }
     }
 
     // ── TIMES DE ALTA PERFORMANCE (EQUIPES)
@@ -125,5 +141,34 @@ public class GerenciadorFluxoController {
     public void exibirTime(Time timeAtual) {
         if (timeAtual != null)
             interfaceUsuario.exibirPainelTime(timeAtual);
+    }
+
+    // ── MÉTODOS DE CONSULTA ──────────────────────────────────────────
+
+    public Colaborador buscarColaborador(String login) {
+        return colaboradorRepo.buscarPorLogin(login).orElse(null);
+    }
+
+    public GestaoProjeto buscarProjeto(String nome) {
+        return projetoRepo.buscarPorNome(nome).orElse(null);
+    }
+
+    public Time buscarTime(String nome) {
+        return timeRepo.buscarPorNome(nome).orElse(null);
+    }
+
+    public void listarColaboradores() {
+        interfaceUsuario.exibirSeparador("Lista de Colaboradores");
+        colaboradorRepo.listarTodos().forEach(interfaceUsuario::exibirPainelColaborador);
+    }
+
+    public void listarProjetos() {
+        interfaceUsuario.exibirSeparador("Lista de Projetos (Relatório de Desempenho)");
+        projetoRepo.listarProjetos().forEach(interfaceUsuario::exibirPainelProjeto);
+    }
+
+    public void listarTimes() {
+        interfaceUsuario.exibirSeparador("Lista de Times");
+        timeRepo.listarTimes().forEach(interfaceUsuario::exibirPainelTime);
     }
 }
