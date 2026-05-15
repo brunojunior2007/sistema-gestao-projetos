@@ -1,21 +1,19 @@
 package br.com.brunojr.sistemagestao.controllers;
 
-import br.com.brunojr.sistemagestao.domain.Tarefa;
-
-import br.com.brunojr.sistemagestao.domain.Time;
-import br.com.brunojr.sistemagestao.domain.GestaoProjeto;
+import java.time.LocalDate;
 import br.com.brunojr.sistemagestao.domain.Colaborador;
-import br.com.brunojr.sistemagestao.repositories.TimeRepository;
-import br.com.brunojr.sistemagestao.repositories.GestaoProjetoRepository;
+import br.com.brunojr.sistemagestao.domain.GestaoProjeto;
+import br.com.brunojr.sistemagestao.domain.Tarefa;
+import br.com.brunojr.sistemagestao.domain.Time;
 import br.com.brunojr.sistemagestao.repositories.ColaboradorRepository;
+import br.com.brunojr.sistemagestao.repositories.GestaoProjetoRepository;
+import br.com.brunojr.sistemagestao.repositories.TimeRepository;
 import br.com.brunojr.sistemagestao.ui.InterfaceConsole;
 
-import java.time.LocalDate;
-
 /**
- * Módulo Orquestrador e Gerenciador de Fluxos de Negócio.
- * Estabelece a ponte executiva entre a UI e a Camada de Repositórios e
- * Entidades.
+ * Módulo Orquestrador e Gerenciador de Fluxos de Negócio. Estabelece a ponte
+ * executiva entre a UI e
+ * a Camada de Repositórios e Entidades.
  */
 
 public class GerenciadorFluxoController {
@@ -36,18 +34,18 @@ public class GerenciadorFluxoController {
      * Coordena o fluxo de designação de Colaboradores ao quadro interno da
      * companhia.
      */
-    public Colaborador registrarColaborador(String nome, String cpf, String email,
-            String cargo, String login, String senha,
-            Colaborador.PerfilColaborador perfil) {
+    public Colaborador registrarColaborador(String nome, String cpf, String email, String cargo,
+            String login, String senha, Colaborador.PerfilColaborador perfil) {
         try {
             Colaborador colaboradorAtual = new Colaborador(nome, cpf, email, cargo, login, senha, perfil);
             colaboradorRepo.salvarNoBanco(colaboradorAtual);
-            interfaceUsuario.exibirMensagem(
-                    "Colaborador deferido na base de integração: " + nome + " | Privilégio: [" + perfil + "]");
+            interfaceUsuario.exibirMensagem("Colaborador deferido na base de integração: " + nome
+                    + " | Privilégio: [" + perfil + "]");
             interfaceUsuario.exibirPainelColaborador(colaboradorAtual);
             return colaboradorAtual;
         } catch (IllegalArgumentException e) {
-            interfaceUsuario.exibirAlerta("Desvio operacional reportado na adesão sistêmica: " + e.getMessage());
+            interfaceUsuario.exibirAlerta(
+                    "Desvio operacional reportado na adesão sistêmica: " + e.getMessage());
             return null;
         }
     }
@@ -57,18 +55,19 @@ public class GerenciadorFluxoController {
      * Instrumenta o nascimento do ciclo de vida de uma intervenção de Gestão de
      * Projetos.
      */
-    public GestaoProjeto registrarProjeto(String nome, String descricao,
-            LocalDate inicio, LocalDate terminoPrevisto,
-            Colaborador gerente, double orcamento, GestaoProjeto.Prioridade prioridade) {
+    public GestaoProjeto registrarProjeto(String nome, String descricao, LocalDate inicio,
+            LocalDate terminoPrevisto, Colaborador gerente, double orcamento,
+            GestaoProjeto.Prioridade prioridade) {
         try {
-            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto, gerente, orcamento,
-                    prioridade);
+            GestaoProjeto projetoAtual = new GestaoProjeto(nome, descricao, inicio, terminoPrevisto,
+                    gerente, orcamento, prioridade);
             projetoRepo.salvarProjeto(projetoAtual);
             interfaceUsuario.exibirMensagem("Escopo de projeto chancelado com presteza.");
             interfaceUsuario.exibirPainelProjeto(projetoAtual);
             return projetoAtual;
         } catch (IllegalArgumentException e) {
-            interfaceUsuario.exibirAlerta("Bloqueio impeditivo no comitê de formação de projeto: " + e.getMessage());
+            interfaceUsuario.exibirAlerta(
+                    "Bloqueio impeditivo no comitê de formação de projeto: " + e.getMessage());
             return null;
         }
     }
@@ -76,22 +75,24 @@ public class GerenciadorFluxoController {
     /**
      * Promove uma migração estrutural nas fases do ciclo ativo.
      */
-    public void atualizarStatusProjeto(GestaoProjeto projetoAtual, GestaoProjeto.StatusProjeto novoStatus) {
+    public void atualizarStatusProjeto(GestaoProjeto projetoAtual,
+            GestaoProjeto.StatusProjeto novoStatus) {
         if (projetoAtual == null) {
             interfaceUsuario.exibirAlerta("Ativo de projeto não mapeado na malha analítica.");
             return;
         }
         projetoAtual.atualizarStatus(novoStatus);
-        interfaceUsuario.exibirMensagem("Dashboard revisado. Diretriz macro do projeto '" + projetoAtual.getNome()
-                + "' impulsionada para a fase de " + novoStatus);
+        interfaceUsuario.exibirMensagem("Dashboard revisado. Diretriz macro do projeto '"
+                + projetoAtual.getNome() + "' impulsionada para a fase de " + novoStatus);
     }
 
-    public Tarefa registrarTarefa(GestaoProjeto projeto, String titulo, String desc, LocalDate prazo,
-            Colaborador responsavel) {
+    public Tarefa registrarTarefa(GestaoProjeto projeto, String titulo, String desc,
+            LocalDate prazo, Colaborador responsavel) {
         try {
             Tarefa tarefa = new Tarefa(titulo, desc, prazo, responsavel);
             projeto.adicionarTarefa(tarefa);
-            interfaceUsuario.exibirMensagem("Tarefa '" + titulo + "' acoplada ao projeto '" + projeto.getNome() + "'.");
+            interfaceUsuario.exibirMensagem(
+                    "Tarefa '" + titulo + "' acoplada ao projeto '" + projeto.getNome() + "'.");
             return tarefa;
         } catch (IllegalArgumentException e) {
             interfaceUsuario.exibirAlerta("Falha na geração de tarefa: " + e.getMessage());
@@ -111,7 +112,8 @@ public class GerenciadorFluxoController {
             interfaceUsuario.exibirMensagem("Time operacional mobilizado: " + nome);
             return timeAtual;
         } catch (IllegalArgumentException ex) {
-            interfaceUsuario.exibirAlerta("Obstrução sistemática constatada na formação do núcleo: " + ex.getMessage());
+            interfaceUsuario.exibirAlerta(
+                    "Obstrução sistemática constatada na formação do núcleo: " + ex.getMessage());
             return null;
         }
     }
@@ -158,17 +160,32 @@ public class GerenciadorFluxoController {
     }
 
     public void listarColaboradores() {
-        interfaceUsuario.exibirSeparador("Lista de Colaboradores");
-        colaboradorRepo.listarTodos().forEach(interfaceUsuario::exibirPainelColaborador);
+        var colaboradores = colaboradorRepo.listarTodos();
+        if (colaboradores.isEmpty()) {
+            interfaceUsuario.exibirMensagem("Nenhum colaborador cadastrado no sistema.");
+        } else {
+            interfaceUsuario.exibirSeparador("Lista de Colaboradores");
+            colaboradores.forEach(interfaceUsuario::exibirPainelColaborador);
+        }
     }
 
     public void listarProjetos() {
-        interfaceUsuario.exibirSeparador("Lista de Projetos (Relatório de Desempenho)");
-        projetoRepo.listarProjetos().forEach(interfaceUsuario::exibirPainelProjeto);
+        var projetos = projetoRepo.listarProjetos();
+        if (projetos.isEmpty()) {
+            interfaceUsuario.exibirMensagem("Nenhum projeto cadastrado no sistema.");
+        } else {
+            interfaceUsuario.exibirSeparador("Lista de Projetos (Relatório de Desempenho)");
+            projetos.forEach(interfaceUsuario::exibirPainelProjeto);
+        }
     }
 
     public void listarTimes() {
-        interfaceUsuario.exibirSeparador("Lista de Times");
-        timeRepo.listarTimes().forEach(interfaceUsuario::exibirPainelTime);
+        var times = timeRepo.listarTimes();
+        if (times.isEmpty()) {
+            interfaceUsuario.exibirMensagem("Nenhum time cadastrado no sistema.");
+        } else {
+            interfaceUsuario.exibirSeparador("Lista de Times");
+            times.forEach(interfaceUsuario::exibirPainelTime);
+        }
     }
 }

@@ -28,16 +28,17 @@ O código-fonte é rigorosamente organizado no pacote base `br.com.brunojr.siste
 ## Tecnologias e padrões utilizados
 
 - **Linguagem**: Java (JDK 17+)
+- **Interface Gráfica**: Java Swing & AWT (Design Moderno e Responsivo)
 - **Arquitetura**: MVC (Model - View - Controller) + Repository
-- **Paradigma**: Programação Orientada a Objetos (POO) - Encapsulamento, Construtores e Instanciação.
+- **Paradigma**: Programação Orientada a Objetos (POO)
 - **Versionamento**: Git e GitHub
 
 ## Como executar o projeto
 
 1. Faça o download do arquivo .zip ou clone este repositório.
 2. Abra a pasta do projeto em sua IDE de preferência (IntelliJ IDEA, Eclipse ou VS Code).
-3. Navegue até o pacote `src/br/com/brunojr/sistemagestao/ui` e localize o arquivo `Application.java`.
-4. Execute o arquivo `Application.java` para visualizar a simulação do sistema no console.
+3. Navegue até o pacote `src/br/com/brunojr/sistemagestao` e localize o arquivo `Application.java`.
+4. Execute o arquivo `Application.java`. O sistema abrirá uma **interface gráfica moderna** com um painel de controle intuitivo.
 
 ---
 *Projeto desenvolvido como requisito de avaliação para a disciplina de programação de soluções computacionais.*

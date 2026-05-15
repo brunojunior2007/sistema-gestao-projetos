@@ -3,9 +3,8 @@ package br.com.brunojr.sistemagestao.domain;
 import java.time.LocalDate;
 
 /**
- * Entidade central para a estrutura de Gestão de Projetos corporativos.
- * Mantém os dados cronológicos, de status e responsabilidade direta de
- * gerência.
+ * Entidade central para a estrutura de Gestão de Projetos corporativos. Mantém os dados
+ * cronológicos, de status e responsabilidade direta de gerência.
  */
 public class GestaoProjeto {
     private String nome;
@@ -35,36 +34,39 @@ public class GestaoProjeto {
     /**
      * Inicializa a estrutura de Gestão do Projeto de forma validada.
      * 
-     * @param nome                Identificação do projeto.
-     * @param descricao           Resumo executivo do escopo.
-     * @param dataInicio          Data inicial do cronograma operacional.
+     * @param nome Identificação do projeto.
+     * @param descricao Resumo executivo do escopo.
+     * @param dataInicio Data inicial do cronograma operacional.
      * @param dataTerminoPrevista Previsão final do cronograma.
-     * @param gerente             Colaborador investido do papel de
-     *                            coordenação/gerência.
-     * @param orcamento           Valor financeiro alocado ao projeto.
-     * @param prioridade          Nível de importância estratégica.
+     * @param gerente Colaborador investido do papel de coordenação/gerência.
+     * @param orcamento Valor financeiro alocado ao projeto.
+     * @param prioridade Nível de importância estratégica.
      */
     public GestaoProjeto(String nome, String descricao, LocalDate dataInicio,
-            LocalDate dataTerminoPrevista, Colaborador gerente,
-            double orcamento, Prioridade prioridade) {
+            LocalDate dataTerminoPrevista, Colaborador gerente, double orcamento,
+            Prioridade prioridade) {
         if (nome == null || nome.isBlank()) {
-            throw new IllegalArgumentException("A nomenclatura do projeto não deve ser nula ou em branco.");
+            throw new IllegalArgumentException(
+                    "A nomenclatura do projeto não deve ser nula ou em branco.");
         }
         // [TRAVA DE RESPONSABILIDADE] - Garantia sistêmica via Construtor
         if (gerente == null) {
-            throw new IllegalArgumentException("É imperativo designar um Gerente Responsável para o fluxo do projeto.");
+            throw new IllegalArgumentException(
+                    "É imperativo designar um Gerente Responsável para o fluxo do projeto.");
         }
-        if (gerente.getPerfil() != Colaborador.PerfilColaborador.GERENTE &&
-                gerente.getPerfil() != Colaborador.PerfilColaborador.ADMINISTRADOR) {
+        if (gerente.getPerfil() != Colaborador.PerfilColaborador.GERENTE
+                && gerente.getPerfil() != Colaborador.PerfilColaborador.ADMINISTRADOR) {
             throw new IllegalArgumentException(
                     "O nível de alçada do responsável deve ser Gerencial ou Administrativo.");
         }
-        if (dataInicio != null && dataTerminoPrevista != null && dataTerminoPrevista.isBefore(dataInicio)) {
+        if (dataInicio != null && dataTerminoPrevista != null
+                && dataTerminoPrevista.isBefore(dataInicio)) {
             throw new IllegalArgumentException(
                     "Inconsistência cronológica: O término previsto antecede a data de início.");
         }
         if (orcamento < 0) {
-            throw new IllegalArgumentException("O aporte financeiro (orçamento) não pode ser negativo.");
+            throw new IllegalArgumentException(
+                    "O aporte financeiro (orçamento) não pode ser negativo.");
         }
 
         this.nome = nome;
@@ -131,7 +133,7 @@ public class GestaoProjeto {
 
     @Override
     public String toString() {
-        return "Painel Estratégico [" + status + "] " + nome + " | Liderança: " + gerente.getNome() + " | Prioridade: "
-                + prioridade;
+        return "Painel Estratégico [" + status + "] " + nome + " | Liderança: " + gerente.getNome()
+                + " | Prioridade: " + prioridade;
     }
 }
